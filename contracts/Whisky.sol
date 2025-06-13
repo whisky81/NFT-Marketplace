@@ -25,8 +25,6 @@ contract Whisky is ERC721, ERC721Burnable {
     mapping(uint256 tokenId => Asset) private _assets;
     uint256 private _availableAssetCount;
 
-    event AssetTraded(uint256 tokenId, address owner, address buyer, uint256 price, uint256 timestamp);
-
     /**
      * @dev Minting: The price provided for the minting operation is less than the minimum required (e.g., 0.005 ETH).
      * This error indicates that the input `price` does not meet the contract's minimum pricing criteria for a token.
@@ -113,7 +111,6 @@ contract Whisky is ERC721, ERC721Burnable {
         }
         payable(owner).transfer(asset.price);
 
-        emit AssetTraded(tokenId, owner, _msgSender(), asset.price, block.timestamp);
         return true;     
     }
 
