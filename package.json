@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typechain": "typechain --target ethers-v6 --out-dir './dapp/src/abis' './artifacts/contracts/Whisky.sol/Whisky.json'"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +13,9 @@
   "type": "commonjs",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.24.3"
+    "@typechain/ethers-v6": "^0.5.1",
+    "hardhat": "^2.24.3",
+    "typechain": "^8.3.2"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.3.0"
