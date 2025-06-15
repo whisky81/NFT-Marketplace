@@ -16,6 +16,7 @@ contract Whisky is ERC721, ERC721Burnable {
         Archived
     }
     struct Asset {
+        uint256 tokenId;
         uint256 price;
         AssetStatus status;
         string name;
@@ -72,7 +73,7 @@ contract Whisky is ERC721, ERC721Burnable {
         uint256 tokenId = _nextTokenId++;
         _availableAssetCount++;
 
-        Asset memory asset = Asset({ price: 0.005 ether, status: AssetStatus.Available, name: name, cid: cid });
+        Asset memory asset = Asset({ tokenId: tokenId, price: 0.005 ether, status: AssetStatus.Available, name: name, cid: cid });
         _assets[tokenId] = asset;
 
         _safeMint(_msgSender(), tokenId);
@@ -167,6 +168,11 @@ contract Whisky is ERC721, ERC721Burnable {
         if (!success) {
             revert WhiskyTransferFailed(_msgSender(), amount);
         }
+    }
+
+    function getTokenById(uint256 tokenId) external view returns(Asset memory) {
+        _requireOwned(tokenId);
+        return _assets[tokenId];
     }
 
     function _isAvailableToken(uint256 tokenId) internal view returns (bool) {
