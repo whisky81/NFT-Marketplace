@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { generateNonce, SiweErrorType, SiweMessage } from "siwe";
+import { SiweErrorType, SiweMessage } from "siwe";
 import cookie from "cookie-parser";
 import JWT, { Payload } from "./utils/jwt";
 import { PinataSDK } from "pinata";
@@ -20,12 +20,6 @@ app.use(cors({
 }));
 app.use(cookie());
 app.use(authMiddleware as express.RequestHandler);
-
-app.get("/nonce", (req: Request, res: Response) => {
-    res.json({
-        nonce: generateNonce()
-    });
-})
 
 app.post('/sign-in-with-ethereum', (req: Request, res: Response) => {
     const reqBody = req.body;
