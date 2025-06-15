@@ -38,6 +38,7 @@ async function authMiddleware(
         req.payload = decoded;
         return next();
     } catch (error: any) {
+        console.error(error);
         res.status(400).json({
             message: error?.message || "An error occurred",
         });

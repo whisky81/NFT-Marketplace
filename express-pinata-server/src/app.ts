@@ -74,6 +74,7 @@ app.get('/presigned-url', async (req: CustomRequest, res: Response): Promise<voi
         });
         return;
     } catch (error: any) {
+        console.error(error);
         switch (error) {
             case SiweErrorType.EXPIRED_MESSAGE: {
                 res.status(440).json({ message: error.message || "Expired Message" });
