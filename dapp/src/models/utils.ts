@@ -1,17 +1,12 @@
 import type { PinataSDK } from "pinata";
-import type Account from "./account";
+import Account from "./account";
 import { generateNonce, SiweMessage } from 'siwe';
-import type { FormData } from "../hooks/useCreate";
 import type { Whisky } from "../abis/Whisky";
-import type { NFT, MetadataStorage } from "./storage";
+import type { NFT, FormData, Metadata } from "./storage";
 import { formatEther } from "ethers";
 
 const MAX_SIZE = 20 * 1024 * 1024;
 
-interface Metadata extends FormData {
-    file: string,
-    isImage: boolean
-}
 
 class Utils {
     static signInWithEthereum(
@@ -141,19 +136,22 @@ class Utils {
         return res;
     }
 
-    static getNFT(nft: Whisky.AssetStructOutput): Promise<NFT> {
+    static getNFT(nft: Whisky.AssetStructOutput, contract: Whisky): Promise<NFT> {
         return new Promise(async (resolve, reject) => {
             try {
                 const uri = Utils.getIpfsUri(nft.cid);
                 const response = await fetch(uri);
-                const metadata = (await response.json()) as MetadataStorage;
+                const metadata = (await response.json()) as Metadata;
                 metadata.file = Utils.getIpfsUri(metadata.file);
+
+                const owner = Account.getShortenAddress(await contract.ownerOf(nft.tokenId));
 
                 const _nft: NFT = {
                     ...metadata,
                     tokenId: nft.tokenId.toString(),
                     price: formatEther(nft.price),
-                    status: nft.status === 0n
+                    status: nft.status === 0n,
+                    owner
                 };
                 resolve(_nft)
             } catch (e) {

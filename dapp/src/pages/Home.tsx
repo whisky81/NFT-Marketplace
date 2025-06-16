@@ -7,16 +7,18 @@ export default function Home() {
     const { nfts, error } = useHome();
 
     if (!nfts || error) {
-        if (!nfts) {
-            return <ErrorMessage error="Wating..."/>;
-        }
-        return <ErrorMessage error={error}/>;
+        return <ErrorMessage error={!nfts ? 'Wating...' : error} />;
     }
 
-    return (<div style={{ margin: '10px' }}>
-        {Array.from(nfts.keys()).map((k, i) => (
+    return (<div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gap: '16px',
+        padding: '16px',
+    }}>
+        {nfts.map((nft, i) => (
             <div key={i}>
-                <Card nft={nfts.get(k)}/>
+                <Card nft={nft} />
             </div>
         ))}
     </div>);

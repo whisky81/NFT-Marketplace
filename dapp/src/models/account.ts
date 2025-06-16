@@ -38,8 +38,11 @@ class Account {
     //     this.address = _address;
     // }
 
-    getShortenAddress(): string {
-        return this.address.slice(0, 6) + "..." + this.address.slice(-4);
+    static getShortenAddress(address: string | undefined): string {
+        if (!address) {
+            return '';
+        } 
+        return address.slice(0, 6) + "..." + address.slice(-4);
     }
 }
 

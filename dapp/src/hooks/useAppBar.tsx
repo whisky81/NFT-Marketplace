@@ -1,6 +1,7 @@
 import * as React from 'react';
 import useW3Context from './useW3Context';
 import { formatEther } from 'ethers';
+import Account from '../models/account';
 
 const pages = ['NFTs', 'Create', 'About Contract'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -76,6 +77,6 @@ export default function useAppBar() {
         contractETH,
         symbol,
         error,
-        address: account?.getShortenAddress()
+        address: Account.getShortenAddress(account?.address)
     };
 }

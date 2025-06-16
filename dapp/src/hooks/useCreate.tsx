@@ -1,16 +1,6 @@
 import { useState, useRef, type ChangeEvent } from 'react';
+import type { FormData } from '../models/storage';
 
-export interface Trait {
-    trait_type: string;
-    value: string;
-}
-
-export interface FormData {
-    name: string;
-    description: string;
-    external_url: string;
-    attributes: Trait[];
-}
 
 export default function useCreate() {
     const [open, setOpen] = useState(false);
