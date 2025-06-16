@@ -1,10 +1,8 @@
 import * as React from 'react';
 import useW3Context from './useW3Context';
 import { formatEther } from 'ethers';
-import Account from '../models/account';
 
 const pages = ['NFTs', 'Create', 'About Contract'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function useAppBar() {
     const w3Context = useW3Context();
@@ -16,22 +14,15 @@ export default function useAppBar() {
     const [error, setError] = React.useState('');
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     React.useEffect(() => {
         const load = async () => {
@@ -66,17 +57,13 @@ export default function useAppBar() {
 
     return {
         anchorElNav,
-        anchorElUser,
         handleOpenNavMenu,
-        handleOpenUserMenu,
         handleCloseNavMenu,
-        handleCloseUserMenu,
         pages,
-        settings,
         walletETH,
         contractETH,
         symbol,
         error,
-        address: Account.getShortenAddress(account?.address)
+        address: account?.address
     };
 }

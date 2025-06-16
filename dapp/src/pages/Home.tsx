@@ -1,25 +1,18 @@
-import Card from "../components/Card";
+import CardList from "../components/CardList";
 import ErrorMessage from "../components/Error";
+import SearchBar from "../components/SearchBar";
 import { useHome } from "../hooks/useHome";
 
 
 export default function Home() {
-    const { nfts, error } = useHome();
+    const { nfts, error, filter, setFilter, value, setValue, handleSearch } = useHome();
 
     if (!nfts || error) {
         return <ErrorMessage error={!nfts ? 'Wating...' : error} />;
     }
 
-    return (<div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-        gap: '16px',
-        padding: '16px',
-    }}>
-        {nfts.map((nft, i) => (
-            <div key={i}>
-                <Card nft={nft} />
-            </div>
-        ))}
-    </div>);
+    return (<>
+        <SearchBar filter={filter} setFilter={setFilter} value={value} setValue={setValue} handleSearch={handleSearch}/>
+        <CardList nfts={nfts}/>
+    </>);
 }

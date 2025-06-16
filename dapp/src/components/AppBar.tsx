@@ -14,17 +14,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import useAppBar from '../hooks/useAppBar';
 import { Link } from 'react-router-dom';
 import ErrorMessage from './Error';
+import Account from '../models/account';
 
 function ResponsiveAppBar() {
     const { 
         pages, 
-        settings, 
         anchorElNav, 
-        anchorElUser, 
         handleCloseNavMenu, 
-        handleCloseUserMenu, 
         handleOpenNavMenu, 
-        handleOpenUserMenu,
         walletETH, contractETH, error, symbol, address
     } = useAppBar();
 
@@ -127,34 +124,12 @@ function ResponsiveAppBar() {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="0x0" src="/static/images/avatar/2.jpg" />
+                            <IconButton sx={{ p: 0 }}>
+                                <Link to={`/profile/${address}`}><Avatar alt="0x0" src="" /></Link>
                             </IconButton>
                         </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
                     </Box>
-                    <Box sx={{ margin: '5px' }}>{address}</Box>
+                    <Box sx={{ margin: '5px' }}>{Account.getShortenAddress(address)}</Box>
                 </Toolbar>
             </Container>
         </AppBar>

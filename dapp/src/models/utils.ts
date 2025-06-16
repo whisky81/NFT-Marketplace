@@ -144,7 +144,9 @@ class Utils {
                 const metadata = (await response.json()) as Metadata;
                 metadata.file = Utils.getIpfsUri(metadata.file);
 
-                const owner = Account.getShortenAddress(await contract.ownerOf(nft.tokenId));
+                let owner = await contract.ownerOf(nft.tokenId);
+                // const currentAddress = await (contract.runner as ethers.Signer).getAddress();
+                // owner = owner === account.address ? "You" : Account.getShortenAddress(owner);
 
                 const _nft: NFT = {
                     ...metadata,
@@ -158,6 +160,47 @@ class Utils {
                 reject(e);
             }
         });
+    }
+
+    static async searchByAll(contract: Whisky, value: string): Promise<Whisky.AssetStructOutput[]> {
+        try {
+            const _nfts = await contract.getAvailableTokens();
+            const nftsByOwner = await contract.getTokensOf(value);
+
+            return _nfts.filter(nft => {
+                return (
+                    nft.tokenId.toString() === value ||
+                    nft.name.toLowerCase().includes(value.toLowerCase()) ||
+                    nftsByOwner.some(e => e.tokenId.toString() === nft.tokenId.toString())
+                );
+            });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+
+    static async search(contract: Whisky, filter: string, value: string): Promise<Whisky.AssetStructOutput[]> {
+        let res: Whisky.AssetStructOutput[] = [];
+        try {
+            if (filter === 'all' && value === '') {
+                return (await contract.getAvailableTokens());
+            }
+            if (filter === 'tokenId') {
+                res.push(await contract.getTokenById(BigInt(value)));
+            } else if (filter === 'owner') {
+                res = await contract.getTokensOf(value);
+            } else if (filter === 'name') {
+                const _nfts = await contract.getAvailableTokens();
+                res = _nfts.filter(nft => nft.name.toLowerCase().includes(value.toLowerCase()));
+            } else {
+                res = await Utils.searchByAll(contract, value);
+            }
+        } catch (e) {
+
+        }
+
+        return res;
     }
 }
 

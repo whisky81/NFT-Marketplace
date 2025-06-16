@@ -44,6 +44,13 @@ class Account {
         } 
         return address.slice(0, 6) + "..." + address.slice(-4);
     }
+
+    static getHandleAddress(currentAddress: string, targetAddress: string) {
+        if (currentAddress === targetAddress) {
+            return "You";
+        }
+        return Account.getShortenAddress(targetAddress);
+    }
 }
 
 export default Account;

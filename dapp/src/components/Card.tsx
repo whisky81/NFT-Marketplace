@@ -6,15 +6,16 @@ import type { NFT } from "../models/storage";
 import Card from '@mui/material/Card';
 import { CardContent, CardMedia, Typography } from "@mui/material";
 import useW3Context from "../hooks/useW3Context";
+import Address from "./AddressElement";
 
-export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput}) {
+export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput }) {
     const w3Contract = useW3Context();
-    const { contract } = w3Contract;
+    const { contract, account } = w3Contract;
     const [metadata, setMetadata] = useState<NFT | null>(null);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (!contract) {
+        if (!contract || !account) {
             return;
         }
         const load = async () => {
@@ -29,9 +30,9 @@ export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput}) {
 
         load();
 
-    }, [nft, contract]);
+    }, [nft, contract, account]);
 
-    if (!metadata || error) {
+    if (!account || !contract || !metadata || error) {
         return <ErrorMessage error={error} />
     }
 
@@ -58,13 +59,13 @@ export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput}) {
             }
 
             <CardContent>
-                <h3>{metadata.name}</h3>
+                <h3>{`${metadata.name}   #${metadata.tokenId}`}</h3>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Price: {metadata.price} ETH
                 </Typography>
-                {metadata.status && <p style={{ color: 'green' }}>Sale</p>}
-                {!metadata.status && <p style={{ color: 'red' }}>Sale</p>}
-                <small>Owner: {metadata.owner}</small>
+                {metadata.status && <p style={{ color: 'green' }}>Available</p>}
+                {!metadata.status && <p style={{ color: 'red' }}>Archived</p>}
+                <Address currentAddress={account.address} targetAddress={metadata.owner}/>
             </CardContent>
         </Card>
     );

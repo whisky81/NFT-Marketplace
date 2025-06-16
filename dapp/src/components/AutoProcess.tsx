@@ -11,7 +11,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from "react-router-dom";
-import type { FormData } from "../hooks/useCreate";
+import type { FormData } from "../models/storage";
 import useW3Context from '../hooks/useW3Context';
 import ErrorMessage from './Error';
 import Utils from '../models/utils';

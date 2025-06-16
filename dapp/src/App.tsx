@@ -7,7 +7,8 @@ import ErrorMessage from './components/Error';
 import NotFound from "./pages/NotFound";
 import Create from './pages/Create';
 import Home from './pages/Home';
-
+import NFTDetail from './pages/NFTDetail';
+import Profile from './pages/Profile';
 function App() {
   const w3Context = useW3Context();
   const { isLoading, account, contract, error } = w3Context;
@@ -23,7 +24,11 @@ function App() {
   return (<BrowserRouter>
     <ResponsiveAppBar />
     <Routes>
-      <Route path="/" element={<Home />}/>
+      <Route path="/">
+        <Route index element={<Home />}/>
+        <Route path="/nfts/:tokenId" element={<NFTDetail />}/>
+      </Route>
+      <Route path="/profile/:account" element={<Profile />}/>
       <Route path='/create' element={<Create />}/>
       <Route path="*" element={<NotFound />}/>
     </Routes>

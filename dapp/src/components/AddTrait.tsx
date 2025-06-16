@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useState } from 'react';
-import type { Trait, FormData } from '../hooks/useCreate';
+import type { Trait, FormData } from '../models/storage';
 
 type AddTraitType = { isTraitModalOpen: boolean, setTraitModalOpen: React.Dispatch<React.SetStateAction<boolean>>, setData: React.Dispatch<React.SetStateAction<FormData>> };
 
