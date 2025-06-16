@@ -17,6 +17,14 @@ export default function useProfile(targetAddress: string | undefined) {
     const [error, setError] = useState('');
     const [nfts, setNfts] = useState<Whisky.AssetStructOutput[] | null>(null);
 
+    const withdraw = async () => {
+        if (!stats || !contract) return;
+        if (parseFloat(stats.contractBalance) === 0) return;
+
+        await contract.withdraw();
+        alert("Withdraw successfully!!!");
+    }
+
     const handleCopy = () => {
         navigator.clipboard.writeText(account === null ? '' : account.address);
     };
@@ -65,5 +73,5 @@ export default function useProfile(targetAddress: string | undefined) {
         };
     }, [targetAddress, account, contract]);
 
-    return { handleCopy, error, stats, nfts };
+    return { handleCopy, error, stats, nfts, withdraw };
 }
