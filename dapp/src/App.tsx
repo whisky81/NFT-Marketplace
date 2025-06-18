@@ -9,6 +9,7 @@ import Create from './pages/Create';
 import Home from './pages/Home';
 import NFTDetail from './pages/NFTDetail';
 import Profile from './pages/Profile';
+import Transfer from './pages/Transfer';
 function App() {
   const w3Context = useW3Context();
   const { isLoading, account, contract, error } = w3Context;
@@ -30,6 +31,7 @@ function App() {
       </Route>
       <Route path="/profile/:account" element={<Profile />}/>
       <Route path='/create' element={<Create />}/>
+      <Route path="/transfer/:tokenId" element={<Transfer _metadata={null}/>}/>
       <Route path="*" element={<NotFound />}/>
     </Routes>
   </BrowserRouter>);

@@ -202,6 +202,21 @@ class Utils {
 
         return res;
     }
+
+    static async isApprovedFor(tokenId: bigint, contract: Whisky, account: Account): Promise<boolean> {
+        try {
+            const owner = await contract.ownerOf(tokenId);
+            const isApprovedForAll = await contract.isApprovedForAll(owner, account.address);
+            const approvedAddress = await contract.getApproved(tokenId);
+            return (
+                owner === account.address ||
+                isApprovedForAll ||
+                approvedAddress === account.address
+            );
+        } catch(e) {
+            throw e;
+        }
+    }
 }
 
 export default Utils;
