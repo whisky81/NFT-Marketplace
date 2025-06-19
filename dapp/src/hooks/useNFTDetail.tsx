@@ -15,6 +15,20 @@ export default function useNFTDetail(tokenId: string | undefined) {
     const [error, setError] = useState('');
     const [isLoading, setIsloading] = useState(false);
 
+    const handleResell = async () => {
+        try {
+            setIsloading(true);
+            if (!account || !contract || !metadata) {
+                throw new Error("Burn Failed");
+            }
+            const tx = await contract.resell(metadata.tokenId);
+            await tx.wait();
+            navigate(`/profile/${account.address}`);
+        } catch (e: any) {
+            setError(e.message || "Resell Failed");
+        }
+    }
+
     const handleBurn = async () => {
         try {
             setIsloading(true);
@@ -42,7 +56,7 @@ export default function useNFTDetail(tokenId: string | undefined) {
             await tx.wait();
 
             navigate(`/profile/${account.address}`);
-            
+
         } catch (e: any) {
             setError(e.message || "Burn Failed");
         }
@@ -57,13 +71,22 @@ export default function useNFTDetail(tokenId: string | undefined) {
 
                 setMetadata(metadata);
                 setError('');
+
+                account.provider.on('block', async () => {
+                    const updateNft = await contract.getTokenById(tokenId);
+                    const updateMetadata = await Utils.getNFT(updateNft, contract);
+                    setMetadata(updateMetadata);
+                });
             } catch (e: any) {
                 setError(e.message || "Failed to fetch metadata");
             }
         }
 
         load();
+        return () => {
+            account?.provider.removeAllListeners();
+        }
     }, [tokenId, account, contract]);
 
-    return { metadata, error, handleBurn, account, handleBuy, isLoading };
+    return { metadata, error, handleBurn, account, handleBuy, isLoading, handleResell };
 }

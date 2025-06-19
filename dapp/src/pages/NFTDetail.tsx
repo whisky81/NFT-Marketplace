@@ -35,7 +35,7 @@ type Params = {
 
 export default function NFTDetail() {
     const params = useParams<Params>();
-    const { metadata, error, handleBurn, account, handleBuy, isLoading } = useNFTDetail(params.tokenId);
+    const { metadata, error, handleBurn, account, handleBuy, isLoading, handleResell } = useNFTDetail(params.tokenId);
 
 
     if (error) {
@@ -140,9 +140,15 @@ export default function NFTDetail() {
                         </Paper>
                         <Paper elevation={0} sx={{ p: 2.5, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
                             <Typography variant="h5" component="h1" fontWeight="bold">Buy For {metadata.price} ETH</Typography>
-                            {metadata.owner === account.address ? (
+                            {metadata.owner === account.address && metadata.status && (
                                 <Typography variant="body2" color="text.secondary">Owned by <Address currentAddress={account.address} targetAddress={metadata.owner} /></Typography>
-                            ) : (
+                            )}
+                            {metadata.owner === account.address && !metadata.status && (
+                                <Button variant="contained" color="primary" fullWidth startIcon={<LocalOfferIcon />} size="large" onClick={handleResell}>
+                                    Resell
+                                </Button>
+                            )}
+                            {metadata.owner !== account.address && (
                                 <Button variant="contained" color="primary" fullWidth startIcon={<LocalOfferIcon />} size="large" onClick={handleBuy}>
                                     Buy Now
                                 </Button>
