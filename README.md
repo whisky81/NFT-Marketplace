@@ -68,7 +68,7 @@ Thực hiện theo các bước sau để chạy demo:
     * Di chuyển đến thư mục gốc.
     * Chạy lệnh:
         ```bash
-        npx hardhat ignition deploy ./ignition/modules/Whisky.js --network localhost
+        npx hardhat ignition deploy ./ignition/modules/Whisky.ts --network localhost
         ```
 
 ### 2. Khởi chạy Express Pinata Server

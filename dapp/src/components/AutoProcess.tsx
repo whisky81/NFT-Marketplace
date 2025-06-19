@@ -72,7 +72,11 @@ export default function AutoProcess({ open, setOpen, data, file }: AutoProcessTy
             navigate("/");
         } catch (error) {
             setError("Failed to create NFT");
-            // send _cids to server to unpin
+            try {
+                await Utils.unpin(_cids);
+            } catch(e: any) {
+                console.error(e);
+            }
         }
     }, [pinata, file, data, contract, navigate]);
 

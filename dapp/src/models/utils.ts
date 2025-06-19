@@ -123,6 +123,22 @@ class Utils {
         })
     }
 
+    static async unpin(cids: string[]): Promise<void> {
+        const url = import.meta.env.VITE_SERVER_URL as string;
+        try {
+            await fetch(`${url}/unpin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cids: cids }),
+                credentials: 'include'
+            });
+        } catch (e) {
+            throw e;
+        }
+    }
+
     static getIpfsUri(cid: string): string {
         const url = import.meta.env.VITE_GATEWAY_URL;
         return `${url}/ipfs/${cid}`;
@@ -213,7 +229,7 @@ class Utils {
                 isApprovedForAll ||
                 approvedAddress === account.address
             );
-        } catch(e) {
+        } catch (e) {
             throw e;
         }
     }

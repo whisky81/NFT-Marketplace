@@ -88,9 +88,32 @@ app.get('/presigned-url', async (req: CustomRequest, res: Response): Promise<voi
                 res.status(500).json({
                     message: error.message || "An error occurred while generating the presigned URL",
                 });
-                return; 
+                return;
             }
         }
+    }
+})
+
+app.post('/unpin', async (req: Request, res: Response): Promise<void> => {
+    try {
+
+        const cids: string[] = req.body.cids;
+        const pinata = new PinataSDK({
+            pinataJwt: config.pinataJwt,
+            pinataGateway: config.gatewayUrl,
+        });
+
+        await pinata.files.public.delete(cids);
+
+        res.status(200).json({
+            message: 'unpin successfully'
+        });
+        return;
+    } catch (e: any) {
+        res.status(500).json({
+            message: e.message || "Unpin failed"
+        });
+        return;
     }
 })
 
