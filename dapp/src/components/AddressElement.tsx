@@ -23,7 +23,7 @@ export default function Address({ currentAddress, targetAddress}: {currentAddres
         }}
     >
         <Link to={`/profile/${targetAddress}`}>
-            Owner: {Account.getHandleAddress(currentAddress, targetAddress)}
+            {Account.getHandleAddress(currentAddress, targetAddress)}
         </Link>
     </Typography>);
 }

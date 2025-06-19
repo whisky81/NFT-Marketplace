@@ -64,7 +64,8 @@ export default function AutoProcess({ open, setOpen, data, file }: AutoProcessTy
             _cids = await Utils.uploadToIPFS(pinata, file, data);
             handleNext();
 
-            await contract.safeMint(data.name, _cids[0]);
+            const tx = await contract.safeMint(data.name, _cids[0]);
+            await tx.wait();
             handleNext();
 
             setError('');

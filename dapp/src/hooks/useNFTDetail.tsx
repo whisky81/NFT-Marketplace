@@ -3,6 +3,7 @@ import useW3Context from "./useW3Context";
 import type { NFT } from "../models/storage";
 import Utils from "../models/utils";
 import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
 
 
 export default function useNFTDetail(tokenId: string | undefined) {
@@ -12,14 +13,36 @@ export default function useNFTDetail(tokenId: string | undefined) {
 
     const [metadata, setMetadata] = useState<NFT | null>();
     const [error, setError] = useState('');
+    const [isLoading, setIsloading] = useState(false);
 
     const handleBurn = async () => {
         try {
+            setIsloading(true);
             if (!account || !contract || !metadata) {
                 throw new Error("Burn Failed");
             }
-            await contract.burn(metadata.tokenId);
+            const tx = await contract.burn(metadata.tokenId);
+            await tx.wait();
             navigate(`/profile/${account.address}`);
+        } catch (e: any) {
+            setError(e.message || "Burn Failed");
+        }
+    }
+
+    const handleBuy = async () => {
+        try {
+            setIsloading(true);
+            if (!account || !contract || !metadata) {
+                throw new Error("Buy Failed");
+            }
+
+            const tx = await contract.buy(metadata.tokenId, {
+                value: ethers.parseEther(metadata.price)
+            });
+            await tx.wait();
+
+            navigate(`/profile/${account.address}`);
+            
         } catch (e: any) {
             setError(e.message || "Burn Failed");
         }
@@ -34,13 +57,13 @@ export default function useNFTDetail(tokenId: string | undefined) {
 
                 setMetadata(metadata);
                 setError('');
-            } catch(e: any) {
+            } catch (e: any) {
                 setError(e.message || "Failed to fetch metadata");
             }
         }
-        
+
         load();
     }, [tokenId, account, contract]);
 
-    return { metadata, error, handleBurn, account };
+    return { metadata, error, handleBurn, account, handleBuy, isLoading };
 }

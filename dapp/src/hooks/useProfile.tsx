@@ -21,7 +21,8 @@ export default function useProfile(targetAddress: string | undefined) {
         if (!stats || !contract) return;
         if (parseFloat(stats.contractBalance) === 0) return;
 
-        await contract.withdraw();
+        const tx = await contract.withdraw();
+        await tx.wait();
         alert("Withdraw successfully!!!");
     }
 

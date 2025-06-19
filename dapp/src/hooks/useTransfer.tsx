@@ -23,7 +23,8 @@ export default function useTransfer(tokenId: string | undefined, _metadata: NFT 
                 throw new Error("There is an error in the account or the contract");
             }
 
-            await contract["safeTransferFrom(address,address,uint256)"](account.address, targetAddress, BigInt(tokenId));
+            const tx = await contract["safeTransferFrom(address,address,uint256)"](account.address, targetAddress, BigInt(tokenId));
+            await tx.wait();
             // await contract.transferFrom(account.address, targetAddress, BigInt(tokenId));
             navigate(`/profile/${account.address}`);
         } catch (e: any) {

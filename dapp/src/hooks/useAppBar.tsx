@@ -2,7 +2,7 @@ import * as React from 'react';
 import useW3Context from './useW3Context';
 import { formatEther } from 'ethers';
 
-const pages = ['NFTs', 'Create', 'About Contract'];
+const pages = ['Events', 'Create', 'About Contract'];
 
 export default function useAppBar() {
     const w3Context = useW3Context();

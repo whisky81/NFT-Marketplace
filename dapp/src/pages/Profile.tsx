@@ -81,26 +81,29 @@ const Profile = () => {
                 <Typography fontWeight="bold">{stats.contractBalance} ETH</Typography>
               </Box>
               {(account.address === targetAddress) && <Box>
-                <Typography variant="subtitle2" color="red">!!! After you finish withdrawing from contract, please wait for a moment for it to be recorded on the blockchain</Typography>
                 <Button type='button' onClick={withdraw} variant="contained"
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: 'bold',
-                  borderRadius: 2,
-                  textTransform: 'none',
-                  bgcolor: 'white',
-                  color: 'black',
-                  boxShadow: 2,
-                  '&:hover': {
-                    bgcolor: '#80cbc4'
-                  }
-                }}>Withdraw From Contract</Button></Box>}
+                  sx={{
+                    px: 4,
+                    py: 1.5,
+                    fontWeight: 'bold',
+                    borderRadius: 2,
+                    textTransform: 'none',
+                    bgcolor: 'white',
+                    color: 'black',
+                    boxShadow: 2,
+                    '&:hover': {
+                      bgcolor: '#80cbc4'
+                    }
+                  }}>Withdraw From Contract</Button></Box>}
             </Stack>
           </Box>
         </Stack>
       </Paper>
+      <small>
+        <Typography variant="subtitle2" color="green">!After you finish withdrawing from contract or burning a specific token, please wait for a moment for it to be recorded on the blockchain</Typography>
+      </small>
       <CardList nfts={nfts} />
+      
     </>
   );
 };

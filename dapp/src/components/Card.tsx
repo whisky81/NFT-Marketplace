@@ -4,10 +4,10 @@ import Utils from "../models/utils";
 import ErrorMessage from "./Error";
 import type { NFT } from "../models/storage";
 import Card from '@mui/material/Card';
-import { CardContent, CardMedia, Typography } from "@mui/material";
+import { CardContent, CardMedia, Typography, Box } from "@mui/material";
 import useW3Context from "../hooks/useW3Context";
 import Address from "./AddressElement";
-
+import { Link } from "react-router-dom";
 export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput }) {
     const w3Contract = useW3Context();
     const { contract, account } = w3Contract;
@@ -59,13 +59,37 @@ export default function CardElement({ nft }: { nft: Whisky.AssetStructOutput }) 
             }
 
             <CardContent>
-                <h3>{`${metadata.name}   #${metadata.tokenId}`}</h3>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Price: {metadata.price} ETH
-                </Typography>
-                {metadata.status && <p style={{ color: 'green' }}>Available</p>}
-                {!metadata.status && <p style={{ color: 'red' }}>Archived</p>}
-                <Address currentAddress={account.address} targetAddress={metadata.owner}/>
+
+
+                <Link to={`/nfts/${metadata.tokenId}`} style={{ textDecoration: 'none' }}>
+                    <Box
+                        sx={{
+                            p: 2,
+                            bgcolor: 'background.paper',
+                            transition: '0.3s',
+                            '&:hover': {
+                                boxShadow: 4,
+                                transform: 'scale(1.02)',
+                            },
+                        }}
+                    >
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                            {metadata.name} #{metadata.tokenId}
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+                            Price: {metadata.price} ETH
+                        </Typography>
+                        <Typography>
+                            {metadata.status && <p style={{ color: 'green' }}>Available</p>}
+                            {!metadata.status && <p style={{ color: 'red' }}>Archived</p>}
+                        </Typography>
+                        <Typography>
+                            <div>Owner: <Address currentAddress={account.address} targetAddress={metadata.owner} /></div>
+
+                        </Typography>
+                    </Box>
+                </Link>
             </CardContent>
         </Card>
     );
