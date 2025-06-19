@@ -2,7 +2,7 @@
 
 ![Home](./images/nft-marketplace-001.png)
 ![Mint](./images/nft-marketplace-006.png)
-[🫸View More Images🫷 ![alt text](image.png)](./images/)
+[🫸View More Images🫷](./images/)
 # 📋 Tech Stack
 - 🧩 Frontend: React + vite
 - 🧩 Smart Contract: Solidity + Hardhat
