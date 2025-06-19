@@ -1,9 +1,14 @@
-# Tech Stack
-- Frontend: React + vite
-- Smart Contract: Solidity + Hardhat
-- Backend: Typescript + Express
-- IPFS/ storage: Pinata (pining service)
-- Test: Slither
+# ⛓️‍💥 NFT Marketplace 
+
+![Home](./images/nft-marketplace-001.png)
+![Mint](./images/nft-marketplace-006.png)
+[🫸View More Images🫷 ![alt text](image.png)](./images/)
+# 📋 Tech Stack
+- 🧩 Frontend: React + vite
+- 🧩 Smart Contract: Solidity + Hardhat
+- 🧩 Backend: Typescript + Express
+- 🧩 IPFS/ storage: Pinata (pining service)
+- 🧩 Test: Slither
 
 # Hướng dẫn Chạy Demo
 Hướng dẫn này giúp bạn chạy thử dự án demo một cách nhanh chóng.
