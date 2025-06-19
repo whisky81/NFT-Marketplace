@@ -82,7 +82,9 @@ contract Whisky is ERC721, ERC721Burnable {
     }
 
     function burn(uint256 tokenId) public override  {
-        _availableAssetCount--;
+        if (_assets[tokenId].status == AssetStatus.Available) {
+            _availableAssetCount--;
+        }
         super.burn(tokenId);
     }
 
