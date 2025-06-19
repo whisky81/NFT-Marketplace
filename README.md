@@ -1,3 +1,10 @@
+# Tech Stack
+- Frontend: React + vite
+- Smart Contract: Solidity + Hardhat
+- Backend: Typescript + Express
+- IPFS/ storage: Pinata (pining service)
+- Test: Slither
+
 # Hướng dẫn Chạy Demo
 Hướng dẫn này giúp bạn chạy thử dự án demo một cách nhanh chóng.
 
