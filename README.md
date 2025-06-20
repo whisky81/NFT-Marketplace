@@ -3,6 +3,25 @@
 ![Home](./images/nft-marketplace-001.png)
 ![Mint](./images/nft-marketplace-006.png)
 [🫸View More Images🫷](./images/)
+
+# Cấu trúc của metadata
+```json
+{
+  "name": "string",
+  "description": "string",
+  "external_url": "string",
+  "attributes": [
+    {
+      "trait_type": "string",
+      "value": "string"
+    }
+  ],
+  "isImage": true,               // custom field
+  "file": "string"               // cid của ảnh hoặc video
+}
+
+```
+
 # 📋 Tech Stack
 - 🧩 Frontend: React + vite
 - 🧩 Smart Contract: Solidity + Hardhat
